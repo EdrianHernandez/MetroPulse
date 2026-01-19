@@ -1,0 +1,5 @@
+{
+  "name": "MetroPulse - Urban Transit Command",
+  "description": "A high-contrast, production-ready smart city transit dashboard featuring live vehicle tracking, route schedules, environmental metrics, and real-time alerts.",
+  "requestFramePermissions": []
+}
