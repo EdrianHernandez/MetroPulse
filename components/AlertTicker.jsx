@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AlertTriangle, Info, ShieldAlert } from 'lucide-react';
-import { Alert } from '../types';
 
-interface AlertTickerProps {
-  alerts: Alert[];
-}
-
-const AlertTicker: React.FC<AlertTickerProps> = ({ alerts }) => {
+const AlertTicker = ({ alerts }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Auto-rotate alerts if there are multiple
@@ -24,7 +19,7 @@ const AlertTicker: React.FC<AlertTickerProps> = ({ alerts }) => {
 
   const currentAlert = alerts[currentIndex];
 
-  const getIcon = (severity: Alert['severity']) => {
+  const getIcon = (severity) => {
     switch (severity) {
       case 'critical': return <ShieldAlert className="w-5 h-5 text-red-500 animate-pulse" />;
       case 'warning': return <AlertTriangle className="w-5 h-5 text-amber-500" />;
@@ -32,7 +27,7 @@ const AlertTicker: React.FC<AlertTickerProps> = ({ alerts }) => {
     }
   };
 
-  const getBorderColor = (severity: Alert['severity']) => {
+  const getBorderColor = (severity) => {
     switch (severity) {
       case 'critical': return 'border-red-500/50 bg-red-950/20';
       case 'warning': return 'border-amber-500/50 bg-amber-950/20';
