@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TransitVehicle, VehicleType, Status } from '../types';
+import { VehicleType, Status } from '../types.js';
 import { MapPin, Navigation, Gauge, Users, Clock, X } from 'lucide-react';
-
-interface LiveMapProps {
-  vehicles: TransitVehicle[];
-  selectedVehicleId: string | null;
-  onSelectVehicle: (id: string | null) => void;
-}
 
 // Define route geometries
 const ROUTES = [
@@ -16,7 +10,7 @@ const ROUTES = [
 ];
 
 // Generate some static city blocks for visual background
-const generateCityBlocks = (width: number, height: number, count: number) => {
+const generateCityBlocks = (width, height, count) => {
   const blocks = [];
   for (let i = 0; i < count; i++) {
     const w = Math.random() * 80 + 40;
@@ -28,8 +22,8 @@ const generateCityBlocks = (width: number, height: number, count: number) => {
   return blocks;
 };
 
-const LiveMap: React.FC<LiveMapProps> = ({ vehicles, selectedVehicleId, onSelectVehicle }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const LiveMap = ({ vehicles, selectedVehicleId, onSelectVehicle }) => {
+  const containerRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
   
   // Static city geometry
@@ -54,7 +48,7 @@ const LiveMap: React.FC<LiveMapProps> = ({ vehicles, selectedVehicleId, onSelect
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
-  const getVehicleColor = (type: VehicleType) => {
+  const getVehicleColor = (type) => {
     switch (type) {
       case VehicleType.BUS: return '#06b6d4'; // Cyan
       case VehicleType.TRAIN: return '#d946ef'; // Fuchsia
@@ -63,13 +57,13 @@ const LiveMap: React.FC<LiveMapProps> = ({ vehicles, selectedVehicleId, onSelect
     }
   };
 
-  const getHeadingText = (deg: number) => {
+  const getHeadingText = (deg) => {
     const val = Math.floor((deg / 45) + 0.5);
     const arr = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
     return arr[(val % 8)];
   };
 
-  const getStatusColor = (s: Status) => {
+  const getStatusColor = (s) => {
       switch (s) {
           case Status.ON_TIME: return 'text-emerald-400';
           case Status.DELAYED: return 'text-amber-400';
@@ -78,7 +72,7 @@ const LiveMap: React.FC<LiveMapProps> = ({ vehicles, selectedVehicleId, onSelect
       }
   };
 
-  const getOccupancy = (id: string) => {
+  const getOccupancy = (id) => {
     const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const levels = ['Low', 'Medium', 'High', 'Full'];
     const colors = ['text-emerald-400', 'text-cyan-400', 'text-amber-400', 'text-red-400'];
@@ -86,7 +80,7 @@ const LiveMap: React.FC<LiveMapProps> = ({ vehicles, selectedVehicleId, onSelect
     return { level: levels[idx], color: colors[idx] };
   };
 
-  const getSpeed = (type: VehicleType) => {
+  const getSpeed = (type) => {
       switch(type) {
           case VehicleType.TRAIN: return '85 km/h';
           case VehicleType.BUS: return '45 km/h';
