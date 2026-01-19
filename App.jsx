@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { RouteInfo, TransitVehicle, Status, VehicleType, Alert, MetricData } from './types';
-import LiveMap from './components/LiveMap';
-import RouteSchedule from './components/RouteSchedule';
-import TrafficMetrics from './components/TrafficMetrics';
-import AlertTicker from './components/AlertTicker';
+import { Status, VehicleType } from './types.js';
+import LiveMap from './components/LiveMap.js';
+import RouteSchedule from './components/RouteSchedule.js';
+import TrafficMetrics from './components/TrafficMetrics.js';
+import AlertTicker from './components/AlertTicker.js';
 import { Layers, Radio, Settings } from 'lucide-react';
 
 // --- MOCK DATA GENERATORS ---
 
-const INITIAL_VEHICLES: TransitVehicle[] = [
+const INITIAL_VEHICLES = [
   { id: 'V-101', type: VehicleType.BUS, routeId: '101', position: { x: 100, y: 300 }, heading: 90, status: Status.ON_TIME },
   { id: 'V-102', type: VehicleType.BUS, routeId: '101', position: { x: 300, y: 300 }, heading: 90, status: Status.ON_TIME },
   { id: 'T-404', type: VehicleType.TRAIN, routeId: 'RED', position: { x: 400, y: 100 }, heading: 180, status: Status.DELAYED },
@@ -16,7 +16,7 @@ const INITIAL_VEHICLES: TransitVehicle[] = [
   { id: 'R-22',  type: VehicleType.TRAM, routeId: 'C-LOOP', position: { x: 400, y: 300 }, heading: 45, status: Status.ON_TIME },
 ];
 
-const INITIAL_ROUTES: RouteInfo[] = [
+const INITIAL_ROUTES = [
   { id: 'r1', routeNumber: '101', destination: 'Central Station', eta: 4, status: Status.ON_TIME },
   { id: 'r2', routeNumber: '101', destination: 'North Harbor', eta: 12, status: Status.ON_TIME },
   { id: 'r3', routeNumber: 'RED', destination: 'Airport Terminal', eta: 8, status: Status.DELAYED },
@@ -25,27 +25,27 @@ const INITIAL_ROUTES: RouteInfo[] = [
   { id: 'r6', routeNumber: '205', destination: 'Westside Mall', eta: 18, status: Status.OUT_OF_SERVICE },
 ];
 
-const ALERTS: Alert[] = [
+const ALERTS = [
   { id: 'a1', message: 'Signal failure at Downtown crossing. Expect delays on Red Line.', severity: 'warning', timestamp: '10:42 AM' },
   { id: 'a2', message: 'Accident cleared on 5th Ave. Traffic returning to normal.', severity: 'info', timestamp: '10:30 AM' },
   { id: 'a3', message: 'Severe weather warning in effect for Northern Sector.', severity: 'critical', timestamp: '10:15 AM' },
 ];
 
-const generateTrafficData = (): MetricData[] => {
+const generateTrafficData = () => {
   return Array.from({ length: 12 }, (_, i) => ({
     time: `${i * 5}m`,
     value: 60 + Math.random() * 30
   }));
 };
 
-const App: React.FC = () => {
-  const [vehicles, setVehicles] = useState<TransitVehicle[]>(INITIAL_VEHICLES);
-  const [routes, setRoutes] = useState<RouteInfo[]>(INITIAL_ROUTES);
-  const [trafficData, setTrafficData] = useState<MetricData[]>(generateTrafficData());
+const App = () => {
+  const [vehicles, setVehicles] = useState(INITIAL_VEHICLES);
+  const [routes, setRoutes] = useState(INITIAL_ROUTES);
+  const [trafficData, setTrafficData] = useState(generateTrafficData());
   const [currentTime, setCurrentTime] = useState(new Date());
   
   // Lifted state for selection coordination
-  const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(null);
+  const [selectedVehicleId, setSelectedVehicleId] = useState(null);
   
   // Derived state
   const selectedRouteId = vehicles.find(v => v.id === selectedVehicleId)?.routeId || null;
@@ -96,7 +96,7 @@ const App: React.FC = () => {
          });
       }
 
-    }, 100); // 60fps-ish animation for vehicles
+    }, 100); // ~60fps animation for vehicles
 
     return () => clearInterval(interval);
   }, []);
