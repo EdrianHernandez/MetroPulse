@@ -1,19 +1,18 @@
 import React from 'react';
-import { RouteInfo, Status } from '../types';
+import { Status } from '../types.js';
 import { Clock, ArrowRight } from 'lucide-react';
 
-interface RouteScheduleProps {
-  routes: RouteInfo[];
-  highlightedRouteId: string | null;
-}
-
-const RouteSchedule: React.FC<RouteScheduleProps> = ({ routes, highlightedRouteId }) => {
-  const getStatusColor = (status: Status) => {
+const RouteSchedule = ({ routes, highlightedRouteId }) => {
+  const getStatusColor = (status) => {
     switch (status) {
-      case Status.ON_TIME: return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20';
-      case Status.DELAYED: return 'text-amber-400 bg-amber-400/10 border-amber-400/20';
-      case Status.OUT_OF_SERVICE: return 'text-red-400 bg-red-400/10 border-red-400/20';
-      default: return 'text-gray-400';
+      case Status.ON_TIME: 
+        return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20';
+      case Status.DELAYED: 
+        return 'text-amber-400 bg-amber-400/10 border-amber-400/20';
+      case Status.OUT_OF_SERVICE: 
+        return 'text-red-400 bg-red-400/10 border-red-400/20';
+      default: 
+        return 'text-gray-400';
     }
   };
 
