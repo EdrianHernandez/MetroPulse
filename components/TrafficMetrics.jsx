@@ -1,23 +1,16 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Activity, Wind, Car } from 'lucide-react';
-import { MetricData } from '../types';
 
-interface TrafficMetricsProps {
-  trafficData: MetricData[];
-  aqiLevel: number;
-  avgSpeed: number;
-}
-
-const TrafficMetrics: React.FC<TrafficMetricsProps> = ({ trafficData, aqiLevel, avgSpeed }) => {
+const TrafficMetrics = ({ trafficData, aqiLevel, avgSpeed }) => {
   
-  const getAQIColor = (level: number) => {
+  const getAQIColor = (level) => {
     if (level < 50) return 'text-emerald-400';
     if (level < 100) return 'text-amber-400';
     return 'text-red-400';
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-slate-900 border border-slate-600 p-2 rounded shadow-xl">
