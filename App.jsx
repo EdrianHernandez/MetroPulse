@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Status, VehicleType } from './types.js';
-import LiveMap from './components/LiveMap.js';
-import RouteSchedule from './components/RouteSchedule.js';
-import TrafficMetrics from './components/TrafficMetrics.js';
-import AlertTicker from './components/AlertTicker.js';
+import LiveMap from './components/LiveMap.jsx';
+import RouteSchedule from './components/RouteSchedule.jsx';
+import TrafficMetrics from './components/TrafficMetrics.jsx';
+import AlertTicker from './components/AlertTicker.jsx';
 import { Layers, Radio, Settings } from 'lucide-react';
 
 // --- MOCK DATA GENERATORS ---
